@@ -1,154 +1,8 @@
+import 'package:deen_pal/components/prayer_tile.dart';
 import 'package:flutter/material.dart';
 import '../services/prayer_times.dart';
 import 'package:deen_pal/constants/colors.dart' as colors;
 
-// class PrayerTimes extends StatefulWidget {
-//   const PrayerTimes({super.key});
-
-//   @override
-//   State<PrayerTimes> createState() => _PrayerTimesState();
-// }
-
-// class _PrayerTimesState extends State<PrayerTimes> {
-//   @override
-//   Widget build(BuildContext context) {
-//     return Scaffold(
-//       backgroundColor: colors.accentColor,
-//       appBar: AppBar(
-
-//         elevation: 0,
-//         title: const Text(
-//           'Prayer TImes',
-//           style: TextStyle(
-//             fontSize: 20,
-//             fontFamily: 'Poppins',
-//           ),
-//         ),
-//         centerTitle: true,
-//       ),
-//       body: Column(
-//         children: [
-//           Container(
-//             decoration: BoxDecoration(
-//               color: colors.primaryColor,
-//               borderRadius: const BorderRadius.only(
-//                 bottomLeft: Radius.circular(20),
-//                 bottomRight: Radius.circular(20),
-//               ),
-//             ),
-//             width: 500,
-//             height: 150,
-//           ),
-//           // const SizedBox(height: 5),
-//           Padding(
-//             padding: const EdgeInsets.all(10),
-//             child: L
-//           ),
-//           Padding(
-//             padding: const EdgeInsets.all(8.0),
-//             child: ListTile(
-//               tileColor: colors.tileColor,
-//               title: Text(
-//                 'Subhi',
-//                 style: TextStyle(
-//                   color: colors.fontColorLight,
-//                   fontSize: 18,
-//                 ),
-//               ),
-//               leading: Image.asset('assets/icons/sun.png', scale: 15),
-//               trailing: Text(
-//                 '12:00 am',
-//                 style: TextStyle(
-//                   color: colors.fontColorLight,
-//                   fontFamily: 'Poppins',
-//                   fontSize: 20,
-//                 ),
-//               ),
-//               shape: RoundedRectangleBorder(
-//                 borderRadius: BorderRadius.circular(20),
-//               ),
-//             ),
-//           ),
-//           Padding(
-//             padding: const EdgeInsets.all(8.0),
-//             child: ListTile(
-//               tileColor: colors.tileColor,
-//               title: Text(
-//                 'Subhi',
-//                 style: TextStyle(
-//                   color: colors.fontColorLight,
-//                   fontSize: 18,
-//                 ),
-//               ),
-//               leading: Image.asset('assets/icons/sun.png', scale: 15),
-//               trailing: Text(
-//                 '12:00 am',
-//                 style: TextStyle(
-//                   color: colors.fontColorLight,
-//                   fontFamily: 'Poppins',
-//                   fontSize: 20,
-//                 ),
-//               ),
-//               shape: RoundedRectangleBorder(
-//                 borderRadius: BorderRadius.circular(20),
-//               ),
-//             ),
-//           ),
-//           Padding(
-//             padding: const EdgeInsets.all(8.0),
-//             child: ListTile(
-//               tileColor: colors.tileColor,
-//               title: Text(
-//                 'Subhi',
-//                 style: TextStyle(
-//                   color: colors.fontColorLight,
-//                   fontSize: 18,
-//                 ),
-//               ),
-//               leading: Image.asset('assets/icons/sunset.png', scale: 15),
-//               trailing: Text(
-//                 '12:00 am',
-//                 style: TextStyle(
-//                   color: colors.fontColorLight,
-//                   fontFamily: 'Poppins',
-//                   fontSize: 20,
-//                 ),
-//               ),
-//               shape: RoundedRectangleBorder(
-//                 borderRadius: BorderRadius.circular(20),
-//               ),
-//             ),
-//           ),
-//           Padding(
-//             padding: const EdgeInsets.all(8.0),
-//             child: ListTile(
-//               tileColor: colors.tileColor,
-//               title: Text(
-//                 'Subhi',
-//                 style: TextStyle(
-//                   color: colors.fontColorLight,
-//                   fontSize: 18,
-//                 ),
-//               ),
-//               leading: Image.asset('assets/icons/night.png', scale: 15),
-//               trailing: Text(
-//                 '12:00 am',
-//                 style: TextStyle(
-//                   color: colors.fontColorLight,
-//                   fontFamily: 'Poppins',
-//                   fontSize: 20,
-//                 ),
-//               ),
-//               shape: RoundedRectangleBorder(
-//                 borderRadius: BorderRadius.circular(20),
-//               ),
-//             ),
-//           ),
-//         ],
-//       ),
-//     );
-//   }
-// }
 class PrayerTimesScreen extends StatefulWidget {
   const PrayerTimesScreen({super.key});
 
@@ -169,10 +23,13 @@ class PrayerTimesScreenState extends State<PrayerTimesScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: colors.accentColor,
+      backgroundColor: colors.primaryColor,
       appBar: AppBar(
-        backgroundColor: colors.accentColor,
+        // foregroundColor: colors.fontColorDark,
         foregroundColor: colors.fontColorLight,
+        // backgroundColor: colors.primaryColor,
+        elevation: 0,
+        backgroundColor: colors.accentColor,
         centerTitle: true,
         title: const Text('Prayer Times'),
       ),
@@ -182,135 +39,84 @@ class PrayerTimesScreenState extends State<PrayerTimesScreen> {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return const Center(child: CircularProgressIndicator());
           } else if (snapshot.hasError) {
-            return Center(child: Text('Error: ${snapshot.error}'));
+            return Center(
+              child: Text(
+                'Network error',
+                style: TextStyle(
+                    color: colors.fontColorDark,
+                    fontSize: 25,
+                    fontFamily: 'Poppins'),
+              ),
+            );
           } else if (!snapshot.hasData || snapshot.data == null) {
             return const Center(child: Text('No data available'));
           } else {
             var times = snapshot.data!['items'][0];
-            return ListView(
+            return Stack(
               children: [
-                Padding(
-                  padding: const EdgeInsets.all(10),
-                  child: ListTile(
-                    tileColor: colors.tileColor,
-                    title: Text(
-                      'Fajr',
-                      style: TextStyle(
-                        color: colors.fontColorLight,
-                        fontSize: 18,
-                      ),
+                Align(
+                  alignment: Alignment.topCenter,
+                  child: Container(
+                    decoration: BoxDecoration(
+                      color: colors.accentColor,
                     ),
-                    leading: Image.asset('assets/icons/sunrise.png', scale: 15),
-                    trailing: Text(
-                      times['fajr'],
-                      style: TextStyle(
-                        color: colors.fontColorLight,
-                        fontFamily: 'Poppins',
-                        fontSize: 20,
-                      ),
-                    ),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(20),
-                    ),
+                    height: 200,
+                    width: 500,
                   ),
                 ),
                 Padding(
-                  padding: const EdgeInsets.all(10),
-                  child: ListTile(
-                    tileColor: colors.tileColor,
-                    title: Text(
-                      'Dhuhr',
-                      style: TextStyle(
-                        color: colors.fontColorLight,
-                        fontSize: 18,
-                      ),
-                    ),
-                    leading: Image.asset('assets/icons/sun.png', scale: 15),
-                    trailing: Text(
-                      times['dhuhr'],
-                      style: TextStyle(
-                        color: colors.fontColorLight,
-                        fontFamily: 'Poppins',
-                        fontSize: 20,
-                      ),
-                    ),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(20),
-                    ),
+                  padding: const EdgeInsets.only(
+                    left: 20,
+                    right: 20,
+                    top: 50,
+                    bottom: 20,
                   ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.all(10),
-                  child: ListTile(
-                    tileColor: colors.tileColor,
-                    title: Text(
-                      'Asr',
-                      style: TextStyle(
-                        color: colors.fontColorLight,
-                        fontSize: 18,
+                  child: Align(
+                    alignment: Alignment.bottomCenter,
+                    child: Container(
+                      height: 350,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(20),
+                        color: colors.primaryColor,
+                        boxShadow: [
+                          BoxShadow(
+                            blurRadius: 5,
+                            spreadRadius: 2,
+                            color: const Color.fromARGB(255, 0, 0, 0)
+                                .withOpacity(.5),
+                            offset: const Offset(0, 3),
+                          ),
+                        ],
                       ),
-                    ),
-                    leading: Image.asset('assets/icons/afternoon.png', scale: 15),
-                    trailing: Text(
-                      times['asr'],
-                      style: TextStyle(
-                        color: colors.fontColorLight,
-                        fontFamily: 'Poppins',
-                        fontSize: 20,
+                      child: Column(
+                        children: [
+                          PrayerTile(
+                            text: 'Fajr',
+                            imagePath: 'assets/icons/sunrise.png',
+                            pryarTime: times['fajr'],
+                          ),
+                          PrayerTile(
+                            text: 'Dhuhr',
+                            imagePath: 'assets/icons/sun.png',
+                            pryarTime: times['dhuhr'],
+                          ),
+                          PrayerTile(
+                            text: 'Asr',
+                            imagePath: 'assets/icons/afternoon.png',
+                            pryarTime: times['asr'],
+                          ),
+                          PrayerTile(
+                            text: 'Maghrib',
+                            imagePath: 'assets/icons/sunset2.png',
+                            pryarTime: times['maghrib'],
+                          ),
+                          PrayerTile(
+                            text: 'Isha',
+                            imagePath: 'assets/icons/night.png',
+                            pryarTime: times['isha'],
+                          ),
+                        ],
                       ),
-                    ),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(20),
-                    ),
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.all(10),
-                  child: ListTile(
-                    tileColor: colors.tileColor,
-                    title: Text(
-                      'Maghrib',
-                      style: TextStyle(
-                        color: colors.fontColorLight,
-                        fontSize: 18,
-                      ),
-                    ),
-                    leading: Image.asset('assets/icons/sunset.png', scale: 15),
-                    trailing: Text(
-                      times['maghrib'],
-                      style: TextStyle(
-                        color: colors.fontColorLight,
-                        fontFamily: 'Poppins',
-                        fontSize: 20,
-                      ),
-                    ),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(20),
-                    ),
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.all(10),
-                  child: ListTile(
-                    tileColor: colors.tileColor,
-                    title: Text(
-                      'Isha',
-                      style: TextStyle(
-                        color: colors.fontColorLight,
-                        fontSize: 18,
-                      ),
-                    ),
-                    leading: Image.asset('assets/icons/night.png', scale: 15),
-                    trailing: Text(
-                      times['isha'],
-                      style: TextStyle(
-                        color: colors.fontColorLight,
-                        fontFamily: 'Poppins',
-                        fontSize: 20,
-                      ),
-                    ),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(20),
                     ),
                   ),
                 ),

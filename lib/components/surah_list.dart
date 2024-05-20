@@ -18,6 +18,7 @@ class _SurahListState extends State<SurahList> {
   List<dynamic> surats = [];
   List<dynamic> suratsTranslated = [];
   bool connectionError = false;
+
   @override
   void initState() {
     super.initState();

@@ -4,14 +4,17 @@ import 'package:deen_pal/screens/quran_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:deen_pal/constants/colors.dart' as colors;
 
+import '../screens/hadith_cateegory_screen.dart';
+
 class MyCategories extends StatelessWidget {
   MyCategories({super.key});
 
   final List<Categories> categories = [
     Categories(
-        imagePath: 'assets/icons/quran.png',
-        targetClass: const QuranScreen(),
-        text: 'Quran'),
+      imagePath: 'assets/icons/quran.png',
+      targetClass: const QuranScreen(),
+      text: 'Quran',
+    ),
     Categories(
         imagePath: 'assets/icons/mosque.png',
         targetClass: const PrayerTimesScreen(),
@@ -22,8 +25,8 @@ class MyCategories extends StatelessWidget {
         text: 'Supplication'),
     Categories(
         imagePath: 'assets/icons/praying.png',
-        targetClass: const QuranScreen(),
-        text: 'Quran'),
+        targetClass: const HadithCategoryScreen(),
+        text: 'Hadtith'),
     Categories(
         imagePath: 'assets/icons/quran.png',
         targetClass: const QuranScreen(),
