@@ -14,7 +14,7 @@ class MyCategories extends StatelessWidget {
         text: 'Quran'),
     Categories(
         imagePath: 'assets/icons/mosque.png',
-        targetClass: const PrayerTimes(),
+        targetClass: const PrayerTimesScreen(),
         text: 'Prayer Times'),
     Categories(
         imagePath: 'assets/icons/beads.png',
