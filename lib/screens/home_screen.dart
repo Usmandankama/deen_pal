@@ -19,12 +19,12 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: colors.accentColor,
-      // backgroundColor: const Color.fromARGB(239, 255, 255, 255),
       body: SingleChildScrollView(
         child: Column(
           children: [
+            const SizedBox(height: 20),
             Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 30),
+              padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -33,11 +33,8 @@ class _HomeScreenState extends State<HomeScreen> {
                     height: 150,
                     width: 500,
                     decoration: BoxDecoration(
+                      color: colors.tileColor,
                       borderRadius: BorderRadius.circular(20),
-                      image: const DecorationImage(
-                        image: AssetImage('assets/images/carpet.jpg'),
-                        fit: BoxFit.cover,
-                      ),
                     ),
                     child: Padding(
                       padding: const EdgeInsets.all(15),
@@ -134,26 +131,15 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    'Categories',
-                    style: TextStyle(
-                        fontFamily: 'Poppins',
-                        fontSize: 20,
-                        color: colors.fontColorLight),
-                  ),
-                  Text(
-                    'View all',
-                    style: TextStyle(
-                      decoration: TextDecoration.underline,
+              child: Align(
+                alignment: Alignment.centerLeft,
+                child: Text(
+                  'Categories',
+                  style: TextStyle(
                       fontFamily: 'Poppins',
-                      fontSize: 17,
-                      color: Colors.grey.shade400,
-                    ),
-                  ),
-                ],
+                      fontSize: 20,
+                      color: colors.fontColorLight),
+                ),
               ),
             ),
             SizedBox(

@@ -57,7 +57,7 @@ class _StartupScreenState extends State<StartupScreen> {
               child: GestureDetector(
                   onTap: () {
                     if (onLastpage) {
-                      Navigator.push(
+                      Navigator.pushReplacement(
                         context,
                         MaterialPageRoute(
                           builder: (context) => const LoginScreen(),

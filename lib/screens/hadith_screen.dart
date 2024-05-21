@@ -16,15 +16,20 @@ class _HadithScreenState extends State<HadithScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          // elevation: 0,
-          title: Text(
-            widget.hadithName,
-            style: const TextStyle(fontFamily: 'Poppins'),
+      appBar: AppBar(
+        // elevation: 0,
+        title: Text(
+          widget.hadithName,
+          style: const TextStyle(
+            fontFamily: 'Poppins',
           ),
-          centerTitle: true,
-          backgroundColor: colors.accentColor,
         ),
-        body: HadithPageview(hadithContent: widget.hadithContent));
+        centerTitle: true,
+        backgroundColor: colors.accentColor,
+      ),
+      body: HadithPageview(
+        hadithContent: widget.hadithContent,
+      ),
+    );
   }
 }
