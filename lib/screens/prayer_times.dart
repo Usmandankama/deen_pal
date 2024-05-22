@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:geolocator/geolocator.dart'; // Import Geolocator package
-import 'package:geocoding/geocoding.dart'; // Import geocoding package
 import 'package:deen_pal/components/prayer_tile.dart';
 import 'package:deen_pal/services/prayer_times.dart';
 import 'package:deen_pal/constants/colors.dart' as colors;
@@ -24,32 +22,46 @@ class _PrayerTimesScreenState extends State<PrayerTimesScreen> {
     _prayerTimes = _prayerTimesService.fetchPrayerTimes();
   }
 
-  // Method to get the device's current location
-Future<void> _getCurrentLocation() async {
-  Position position = await Geolocator.getCurrentPosition(
-    desiredAccuracy: LocationAccuracy.medium,
-  );
-
-  // Use reverse geocoding to get the nearest city
-  List<Placemark> placemarks = await placemarkFromCoordinates(
-    position.latitude,
-    position.longitude,
-  );
-
-  // Extract the city name from the placemark
-  String nearestCity = placemarks.isNotEmpty ? placemarks[0].locality ?? '' : '';
-
-  print('Current location: $nearestCity');
-  
-  setState(() {
-    _selectedLocation = nearestCity.isNotEmpty ? nearestCity : 'Unknown';
-  });
-}
-
   // Method to handle location selection
   void _selectLocation() async {
-    // Automatically fetch the current location
-    await _getCurrentLocation();
+    // Simulate fetching user's location from a dialog or screen
+    String? location = await showDialog<String>(
+      context: context,
+      builder: (BuildContext context) {
+        // This could be a dialog or a screen for location selection
+        return AlertDialog(
+          title: Text('Select Location'),
+          content: Text('Please select your location'),
+          actions: <Widget>[
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop('New York'); // Example location choice
+              },
+              child: Text('New York'),
+            ),
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop('London'); // Example location choice
+              },
+              child: Text('London'),
+            ),
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop('Paris'); // Example location choice
+              },
+              child: Text('Paris'),
+            ),
+          ],
+        );
+      },
+    );
+
+    // Update selected location if a location is chosen
+    if (location != null) {
+      setState(() {
+        _selectedLocation = location;
+      });
+    }
   }
 
   @override
@@ -112,7 +124,7 @@ Future<void> _getCurrentLocation() async {
                     Padding(
                       padding: const EdgeInsets.all(20),
                       child: Align(
-                        alignment: Alignment.bottomCenter,
+                        alignment: Alignment.center,
                         child: Container(
                           height: constraints.maxHeight * 0.6,
                           decoration: BoxDecoration(
