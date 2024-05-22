@@ -1,5 +1,4 @@
 import 'dart:convert';
-
 import 'package:deen_pal/models/hadith_books.dart';
 import 'package:flutter/material.dart';
 import 'package:deen_pal/constants/colors.dart' as colors;
@@ -16,23 +15,20 @@ class HadithCategories extends StatefulWidget {
 }
 
 class _HadithCategoriesState extends State<HadithCategories> {
-  List<dynamic> sahihMuslim = [];
-  List<dynamic> fourtyHadith = [];
-  List<dynamic> riyaduSahiheen = [];
-  late int itemIndex;
-  List<String> jsonPath = [
+  final List<List<dynamic>> hadithData = [[], [], []];
+  final List<String> jsonPaths = [
     'assets/data/fourty-hadith.json',
     'assets/data/riyadu-saliheen.json',
     'assets/data/sahihul-muslim.json',
   ];
-  List<HadithBooks> hadithbooks = [
+  
+  final List<HadithBooks> hadithBooks = [
     HadithBooks(
       authorArabic: 'الإمام مسلم بن الحجاي',
       authorEnglish: 'Imam Muslim ibn al-Hajjaj al-Naysaburi',
       lenght: '91',
       titleArabic: "صحيح مسلم",
       titleEnglish: "Sahih Muslim",
-      // hadithContent: newsahihMuslim
     ),
     HadithBooks(
       authorArabic: "الإمام يحيى بن شرف النووي",
@@ -49,69 +45,49 @@ class _HadithCategoriesState extends State<HadithCategories> {
       titleEnglish: "Riyad as-Salihin",
     ),
   ];
+
   @override
   void initState() {
     super.initState();
-    readJsonData();
+    _readJsonData();
   }
 
-  void readJsonData() async {
-    final String firstResponse =
-        await rootBundle.loadString('assets/data/sahihul-muslim.json');
-    final firstData = await json.decode(firstResponse);
-    final String secondResponse =
-        await rootBundle.loadString('assets/data/fourty-hadith.json');
-    final secondData = await json.decode(secondResponse);
-    final String thirdResponse =
-        await rootBundle.loadString('assets/data/riyadu-saliheen.json');
-    final thirdData = await json.decode(thirdResponse);
-    setState(() {
-      sahihMuslim = firstData['hadiths'];
-      fourtyHadith = secondData['hadiths'];
-      riyaduSahiheen = thirdData['hadiths'];
-    });
+  Future<void> _readJsonData() async {
+    for (int i = 0; i < jsonPaths.length; i++) {
+      final String response = await rootBundle.loadString(jsonPaths[i]);
+      final data = json.decode(response);
+      setState(() {
+        hadithData[i] = data['hadiths'];
+      });
+    }
+  }
+
+  void _navigateToHadithScreen(int index) {
+    final screens = [
+      HadithScreen(hadithContent: hadithData[0], hadithName: 'Sahih Muslim'),
+      HadithScreen(hadithContent: hadithData[1], hadithName: 'The Forty Hadith'),
+      HadithScreen(hadithContent: hadithData[2], hadithName: 'Riyad as-Salihin'),
+    ];
+
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => screens[index]),
+    );
   }
 
   @override
   Widget build(BuildContext context) {
     return GridView.builder(
-      itemCount: hadithbooks.length,
+      itemCount: hadithBooks.length,
       gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
         crossAxisCount: 2,
         crossAxisSpacing: 10,
         mainAxisSpacing: 10,
       ),
       itemBuilder: (context, index) {
-        itemIndex = index;
-        final hadithBook = hadithbooks[index];
+        final hadithBook = hadithBooks[index];
         return GestureDetector(
-          onTap: () {
-            if (index == 0) {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) =>
-                      HadithScreen(hadithContent: sahihMuslim, hadithName: 'Sahih Muslim'),
-                ),
-              );
-            } else if(index == 1){
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) =>
-                      HadithScreen(hadithContent: fourtyHadith,hadithName: 'The Forty Hadith'),
-                ),
-              );
-            }else{
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) =>
-                      HadithScreen(hadithContent: riyaduSahiheen, hadithName: 'Riyad as-salihin'),
-                ),
-              );
-            }
-          },
+          onTap: () => _navigateToHadithScreen(index),
           child: Container(
             height: 200,
             width: 200,
@@ -150,6 +126,7 @@ class _HadithCategoriesState extends State<HadithCategories> {
                         fontFamily: 'Poppins',
                       ),
                     ),
+                    const SizedBox(height: 10),
                     Row(
                       crossAxisAlignment: CrossAxisAlignment.center,
                       mainAxisAlignment: MainAxisAlignment.center,
