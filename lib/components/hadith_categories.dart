@@ -15,13 +15,12 @@ class HadithCategories extends StatefulWidget {
 }
 
 class _HadithCategoriesState extends State<HadithCategories> {
-  final List<List<dynamic>> hadithData = [[], [], []];
   final List<String> jsonPaths = [
     'assets/data/fourty-hadith.json',
     'assets/data/riyadu-saliheen.json',
     'assets/data/sahihul-muslim.json',
   ];
-  
+
   final List<HadithBooks> hadithBooks = [
     HadithBooks(
       authorArabic: 'الإمام مسلم بن الحجاي',
@@ -46,27 +45,21 @@ class _HadithCategoriesState extends State<HadithCategories> {
     ),
   ];
 
-  @override
-  void initState() {
-    super.initState();
-    _readJsonData();
-  }
-
-  Future<void> _readJsonData() async {
-    for (int i = 0; i < jsonPaths.length; i++) {
-      final String response = await rootBundle.loadString(jsonPaths[i]);
+  Future<List<List<dynamic>>> _loadJsonData() async {
+    final List<List<dynamic>> hadithData = [];
+    for (final path in jsonPaths) {
+      final String response = await rootBundle.loadString(path);
       final data = json.decode(response);
-      setState(() {
-        hadithData[i] = data['hadiths'];
-      });
+      hadithData.add(data['hadiths']);
     }
+    return hadithData;
   }
 
-  void _navigateToHadithScreen(int index) {
+  void _navigateToHadithScreen(BuildContext context, int index, List<List<dynamic>> hadithData) {
     final screens = [
-      HadithScreen(hadithContent: hadithData[0], hadithName: 'Sahih Muslim'),
-      HadithScreen(hadithContent: hadithData[1], hadithName: 'The Forty Hadith'),
-      HadithScreen(hadithContent: hadithData[2], hadithName: 'Riyad as-Salihin'),
+      HadithScreen(hadithContent: hadithData[2], hadithName: 'Sahih Muslim'),
+      HadithScreen(hadithContent: hadithData[0], hadithName: 'The Forty Hadith'),
+      HadithScreen(hadithContent: hadithData[1], hadithName: 'Riyad as-Salihin'),
     ];
 
     Navigator.push(
@@ -77,81 +70,93 @@ class _HadithCategoriesState extends State<HadithCategories> {
 
   @override
   Widget build(BuildContext context) {
-    return GridView.builder(
-      itemCount: hadithBooks.length,
-      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-        crossAxisCount: 2,
-        crossAxisSpacing: 10,
-        mainAxisSpacing: 10,
-      ),
-      itemBuilder: (context, index) {
-        final hadithBook = hadithBooks[index];
-        return GestureDetector(
-          onTap: () => _navigateToHadithScreen(index),
-          child: Container(
-            height: 200,
-            width: 200,
-            decoration: BoxDecoration(
-              color: colors.tileColor,
-              borderRadius: BorderRadius.circular(20),
-              boxShadow: [
-                BoxShadow(
-                  blurRadius: 1,
-                  color: Colors.black.withOpacity(.2),
-                  offset: const Offset(1, 3),
-                  spreadRadius: 1,
-                ),
-              ],
+    return FutureBuilder<List<List<dynamic>>>(
+      future: _loadJsonData(),
+      builder: (context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return Center(child: CircularProgressIndicator());
+        } else if (snapshot.hasError) {
+          return Center(child: Text('Error loading data'));
+        } else {
+          final hadithData = snapshot.data!;
+          return GridView.builder(
+            itemCount: hadithBooks.length,
+            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+              crossAxisCount: 2,
+              crossAxisSpacing: 10,
+              mainAxisSpacing: 10,
             ),
-            child: Center(
-              child: Padding(
-                padding: const EdgeInsets.only(left: 10, right: 10, top: 30),
-                child: Column(
-                  children: [
-                    Text(
-                      hadithBook.titleEnglish,
-                      style: TextStyle(
-                        color: colors.fontColorLight,
-                        fontSize: 15,
-                        fontFamily: 'Poppins',
-                        fontWeight: FontWeight.bold,
+            itemBuilder: (context, index) {
+              final hadithBook = hadithBooks[index];
+              return GestureDetector(
+                onTap: () => _navigateToHadithScreen(context, index, hadithData),
+                child: Container(
+                  height: 200,
+                  width: 200,
+                  decoration: BoxDecoration(
+                    color: colors.tileColor,
+                    borderRadius: BorderRadius.circular(20),
+                    boxShadow: [
+                      BoxShadow(
+                        blurRadius: 1,
+                        color: Colors.black.withOpacity(.2),
+                        offset: const Offset(1, 3),
+                        spreadRadius: 1,
                       ),
-                    ),
-                    const SizedBox(height: 10),
-                    Text(
-                      hadithBook.titleArabic,
-                      style: TextStyle(
-                        color: colors.fontColorLight,
-                        fontSize: 15,
-                        fontFamily: 'Poppins',
-                      ),
-                    ),
-                    const SizedBox(height: 10),
-                    Row(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Icon(
-                          Icons.my_library_books_rounded,
-                          color: colors.fontColorLight,
-                          size: 17,
-                        ),
-                        Text(
-                          '${hadithBook.lenght} hadiths',
-                          style: TextStyle(
-                            color: colors.fontColorLight,
-                            fontSize: 15,
-                            fontFamily: 'Poppins',
+                    ],
+                  ),
+                  child: Center(
+                    child: Padding(
+                      padding: const EdgeInsets.only(left: 10, right: 10, top: 30),
+                      child: Column(
+                        children: [
+                          Text(
+                            hadithBook.titleEnglish,
+                            style: TextStyle(
+                              color: colors.fontColorLight,
+                              fontSize: 15,
+                              fontFamily: 'Poppins',
+                              fontWeight: FontWeight.bold,
+                            ),
                           ),
-                        ),
-                      ],
+                          const SizedBox(height: 10),
+                          Text(
+                            hadithBook.titleArabic,
+                            style: TextStyle(
+                              color: colors.fontColorLight,
+                              fontSize: 15,
+                              fontFamily: 'Poppins',
+                            ),
+                          ),
+                          const SizedBox(height: 10),
+                          Row(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Icon(
+                                Icons.my_library_books_rounded,
+                                color: colors.fontColorLight,
+                                size: 17,
+                              ),
+                              Text(
+                                '${hadithBook.lenght} hadiths',
+                                style: TextStyle(
+                                  color: colors.fontColorLight,
+                                  fontSize: 15,
+                                  fontFamily: 'Poppins',
+                                ),
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
                     ),
-                  ],
+                  ),
                 ),
-              ),
-            ),
-          ),
-        );
+              );
+            },
+          );
+        }
       },
     );
   }

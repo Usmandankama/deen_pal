@@ -7,99 +7,109 @@ import 'package:deen_pal/constants/colors.dart' as colors;
 
 class SurahList extends StatefulWidget {
   const SurahList({super.key});
+
   @override
   State<SurahList> createState() => _SurahListState();
 }
 
 class _SurahListState extends State<SurahList> {
-  final GlobalKey _listKey = GlobalKey();
-  List<dynamic> ayahts = [];
-  List<dynamic> ayahtsTranslated = [];
-  List<dynamic> surats = [];
-  List<dynamic> suratsTranslated = [];
-  bool connectionError = false;
+  // Method to load Surah data from JSON files asynchronously
+  Future<List<Surah>> _loadSurahData() async {
+    try {
+      // Load and decode the main Quran JSON file
+      final String response = await rootBundle.loadString('assets/data/quran.json');
+      final data = json.decode(response);
 
-  @override
-  void initState() {
-    super.initState();
-    readJsonData();
-  }
+      // Load and decode the translated Quran JSON file
+      final String responseTranslated = await rootBundle.loadString('assets/data/translation.json');
+      final dataTranslated = json.decode(responseTranslated);
 
-  void readJsonData() async {
-    final String responses =
-        await rootBundle.loadString('assets/data/quran.json');
-    final data = await json.decode(responses);
-    final String responsesTranslated =
-        await rootBundle.loadString('assets/data/translation.json');
-    final dataTranslated = await json.decode(responsesTranslated);
-    setState(() {
-      surats = data['surahs'];
-      suratsTranslated = dataTranslated['surahs'];
-    });
+      // Create a list to hold Surah objects
+      List<Surah> surahs = [];
+      
+      // Populate the list with Surah objects, combining data from both JSON files
+      for (int i = 0; i < data['surahs'].length; i++) {
+        final surah = data['surahs'][i];
+        final surahTranslated = dataTranslated['surahs'][i];
+        surahs.add(Surah(
+          surahNameEng: surah['englishNameTranslation'],
+          surahNameArabic: surah['name'],
+          cityRevealed: surah['revelationType'],
+          ayahts: surah['ayahs'],
+          ayahtsTranslated: surahTranslated['ayahs'],
+        ));
+      }
+
+      // Return the list of Surah objects
+      return surahs;
+    } catch (e) {
+      // Throw an exception if there is an error loading JSON data
+      throw Exception('Error loading JSON data');
+    }
   }
 
   @override
   Widget build(BuildContext context) {
-    return ListView.builder(
-      shrinkWrap: true,
-      key: _listKey,
-      padding: const EdgeInsets.symmetric(vertical: 10),
-      itemCount: surats.length,
-      itemBuilder: (context, index) {
-        int itemIndex = index + 1;
-        final surah = surats[index];
-        final surahTranslated = suratsTranslated[index];
-        final listOfAyahs = surah['ayahs'];
-        ayahts = listOfAyahs;
-        final listOfAyahsTranslated = surahTranslated['ayahs'];
-        ayahtsTranslated = listOfAyahsTranslated;
-        final name = surah['name'];
-        // final engName = surah['englishNameTranslation'];
-        var surat = Surah(
-            surahNameEng: surah['englishNameTranslation'],
-            surahNameArabic: surah['name'],
-            cityRevealed: surah['revelationType'],
-            ayahts: listOfAyahs,
-            ayahtsTranslated: listOfAyahsTranslated);
-        return Column(
-          children: [
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-              child: ListTile(
-                
-                tileColor: colors.tileColor,
-                // textColor: colors.secondaryFontColor,
-                onTap: () {
-                  // Navigate to a Surah details page on item click.
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => SurahContent(surah: surat),
+    return FutureBuilder<List<Surah>>(
+      // Call the method to load Surah data
+      future: _loadSurahData(),
+      builder: (context, snapshot) {
+        // Display a loading indicator while the data is being fetched
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return Center(child: CircularProgressIndicator());
+        }
+        // Display an error message if there is an error loading the data
+        else if (snapshot.hasError) {
+          return Center(child: Text('Error loading data'));
+        }
+        // Display the list of Surahs once the data is successfully loaded
+        else {
+          final surahs = snapshot.data!;
+          return ListView.builder(
+            shrinkWrap: true,
+            padding: const EdgeInsets.symmetric(vertical: 10),
+            itemCount: surahs.length,
+            itemBuilder: (context, index) {
+              final surah = surahs[index];
+              return Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+                child: ListTile(
+                  // Set the tile color
+                  tileColor: colors.tileColor,
+                  // Navigate to the Surah details page when a tile is tapped
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => SurahContent(surah: surah),
+                      ),
+                    );
+                  },
+                  // Display the Surah index
+                  leading: Text(
+                    '${index + 1}',
+                    style: TextStyle(
+                      fontSize: 20,
+                      fontFamily: 'Poppins',
+                      color: colors.fontColorLight,
                     ),
-                  );
-                },
-                leading: Text(
-                  '$itemIndex',
-                  style: TextStyle(
-                    fontSize: 20,
-                    fontFamily: 'Poppins',
-                    color: colors.fontColorLight,
+                  ),
+                  // Display the Surah name in Arabic
+                  trailing: Text(
+                    surah.surahNameArabic,
+                    style: TextStyle(
+                      fontSize: 25,
+                      color: colors.fontColorLight,
+                    ),
+                  ),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(8),
                   ),
                 ),
-                trailing: Text(
-                  name,
-                  style: TextStyle(
-                    fontSize: 25,
-                    color: colors.fontColorLight,
-                  ),
-                ),
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(8),
-                ),
-              ),
-            ),
-          ],
-        );
+              );
+            },
+          );
+        }
       },
     );
   }
