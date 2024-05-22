@@ -2,47 +2,43 @@ import 'package:flutter/material.dart';
 import 'package:deen_pal/constants/colors.dart' as colors;
 
 class PrayerTile extends StatelessWidget {
-  String text, pryarTime, imagePath;
-  PrayerTile({
-    super.key,
+  final String text;
+  final String pryarTime;
+  final String imagePath;
+
+  const PrayerTile({
+    Key? key,
     required this.text,
     required this.imagePath,
     required this.pryarTime,
-  });
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Column(
       children: [
-        Padding(
-          padding: const EdgeInsets.all(5),
-          child: ListTile(
-            title: Text(
-              text,
-              style: TextStyle(
-                color: colors.fontColorDark,
-                fontSize: 18,
-              ),
-            ),
-            leading: Image.asset(imagePath, scale: 15),
-            trailing: Text(
-              // times['isha'],
-              pryarTime,
-              style: TextStyle(
-                color: colors.fontColorDark,
-                fontFamily: 'Poppins',
-                fontSize: 20,
-              ),
-            ),
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(20),
+        ListTile(
+          title: Text(
+            text,
+            style: TextStyle(
+              color: colors.fontColorDark,
+              fontSize: 18,
+              fontWeight: FontWeight.bold,
             ),
           ),
-        ),
-        Divider(
-          color: colors.accentColor,
-          height: 3,
-          thickness: .2,
+          leading: Image.asset(
+            imagePath,
+            width: 32,
+            height: 32,
+          ),
+          trailing: Text(
+            pryarTime,
+            style: TextStyle(
+              color: colors.fontColorDark,
+              fontFamily: 'Poppins',
+              fontSize: 20,
+            ),
+          ),
         ),
       ],
     );
