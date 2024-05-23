@@ -19,7 +19,9 @@ class _HadithCategoryScreenState extends State<HadithCategoryScreen> {
           centerTitle: true,
           title: const Text(
             'Hadith',
-            style: const TextStyle(fontFamily: 'Poppins'),
+            style: TextStyle(
+              fontFamily: 'Poppins',
+            ),
           ),
         ),
         body: const Padding(

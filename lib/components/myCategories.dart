@@ -20,7 +20,7 @@ class MyCategories extends StatelessWidget {
         targetClass: const PrayerTimesScreen(),
         text: 'Prayer Times'),
     Categories(
-        imagePath: 'assets/icons/beads.png',
+        imagePath: 'assets/icons/dua-hands.png',
         targetClass: const QuranScreen(),
         text: 'Supplication'),
     Categories(
