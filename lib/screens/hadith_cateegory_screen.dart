@@ -12,21 +12,6 @@ class HadithCategoryScreen extends StatefulWidget {
 class _HadithCategoryScreenState extends State<HadithCategoryScreen> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        backgroundColor: colors.accentColor,
-        appBar: AppBar(
-          backgroundColor: colors.accentColor,
-          centerTitle: true,
-          title: const Text(
-            'Hadith',
-            style: TextStyle(
-              fontFamily: 'Poppins',
-            ),
-          ),
-        ),
-        body: const Padding(
-          padding: EdgeInsets.all(10),
-          child: HadithCategories(),
-        ));
+    return const HadithCategories();
   }
 }

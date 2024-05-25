@@ -1,10 +1,11 @@
-import 'package:deen_pal/models/hadith.dart';
 import 'package:flutter/material.dart';
 import 'package:deen_pal/constants/colors.dart' as colors;
+import 'package:deen_pal/models/hadith.dart';
 
 class HadithPageview extends StatelessWidget {
-  List<dynamic> hadithContent = [];
-  HadithPageview({super.key, required this.hadithContent});
+  final List<dynamic> hadithContent;
+
+  const HadithPageview({Key? key, required this.hadithContent}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -14,12 +15,12 @@ class HadithPageview extends StatelessWidget {
         var hadiths = hadithContent[index];
         var english = hadiths['english']['text'];
         var narrator = hadiths['english']['narrator'];
-        // final hadith = hadiths['d'];
         var hadith = Hadith(
-            arabic: hadiths['arabic'],
-            english: english,
-            id: hadiths['id'],
-            narrator: narrator);
+          arabic: hadiths['arabic'],
+          english: english,
+          id: hadiths['idInBook'],
+          narrator: narrator,
+        );
         return Scaffold(
           backgroundColor: colors.accentColor,
           body: SingleChildScrollView(
@@ -28,27 +29,30 @@ class HadithPageview extends StatelessWidget {
               child: Center(
                 child: Container(
                   padding: const EdgeInsets.all(20),
-                  // height: double.infinity,
                   decoration: BoxDecoration(
-                      boxShadow: [
-                        BoxShadow(
-                          blurRadius: 4,
-                          spreadRadius: 1,
-                          offset: const Offset(0, 10),
-                          color: Colors.black.withOpacity(.5),
-                        )
-                      ],
-                      color: colors.tileColor,
-                      borderRadius: BorderRadius.circular(20)),
+                    boxShadow: [
+                      BoxShadow(
+                        blurRadius: 4,
+                        spreadRadius: 1,
+                        offset: const Offset(0, 10),
+                        color: Colors.black.withOpacity(.5),
+                      ),
+                    ],
+                    color: colors.tileColor,
+                    borderRadius: BorderRadius.circular(20),
+                  ),
                   child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(
-                        '${hadith.id}',
-                        style: TextStyle(
-                          color: colors.fontColorLight,
-                          fontSize: 20,
-                          fontWeight: FontWeight.bold,
-                          fontFamily: 'Poppins',
+                      Center(
+                        child: Text(
+                          '${hadith.id}',
+                          style: TextStyle(
+                            color: colors.fontColorLight,
+                            fontSize: 20,
+                            fontWeight: FontWeight.bold,
+                            fontFamily: 'Poppins',
+                          ),
                         ),
                       ),
                       Text(

@@ -3,10 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:deen_pal/constants/colors.dart' as colors;
 
 class HadithScreen extends StatefulWidget {
-  String hadithName;
-  List<dynamic> hadithContent = [];
-  HadithScreen(
-      {super.key, required this.hadithContent, required this.hadithName});
+  final List<dynamic> hadithContent;
+  String chapterName;
+  
+  HadithScreen({super.key, required this.hadithContent, required this.chapterName});
 
   @override
   State<HadithScreen> createState() => _HadithScreenState();
@@ -16,10 +16,10 @@ class _HadithScreenState extends State<HadithScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: colors.accentColor,
       appBar: AppBar(
-        // elevation: 0,
         title: Text(
-          widget.hadithName,
+          widget.chapterName,
           style: const TextStyle(
             fontFamily: 'Poppins',
           ),
@@ -27,8 +27,12 @@ class _HadithScreenState extends State<HadithScreen> {
         centerTitle: true,
         backgroundColor: colors.accentColor,
       ),
-      body: HadithPageview(
-        hadithContent: widget.hadithContent,
+      body: Container(
+        decoration: BoxDecoration(
+          color: colors.tileColor,
+          borderRadius: BorderRadius.circular(20),
+        ),
+        child: HadithPageview(hadithContent: widget.hadithContent),
       ),
     );
   }

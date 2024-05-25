@@ -1,5 +1,5 @@
 class HadithBooks{
-  String lenght;
+  String length;
   String titleArabic;
   String titleEnglish;
   String authorEnglish;
@@ -8,7 +8,7 @@ class HadithBooks{
   HadithBooks ({
     required this.authorArabic,
     required this.authorEnglish,
-    required this.lenght,
+    required this.length,
     required this.titleArabic,
     required this.titleEnglish,
     // required this.hadithContent

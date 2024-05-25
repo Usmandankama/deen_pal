@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:deen_pal/constants/colors.dart' as colors;
 
 import '../screens/hadith_cateegory_screen.dart';
+import '../screens/newSuranScreen.dart';
 
 class MyCategories extends StatelessWidget {
   MyCategories({super.key});
@@ -29,7 +30,7 @@ class MyCategories extends StatelessWidget {
         text: 'Hadtith'),
     Categories(
         imagePath: 'assets/icons/quran.png',
-        targetClass: const QuranScreen(),
+        targetClass: QuranPageScreen(pageNumber: 3,),
         text: 'Quran'),
     Categories(
         imagePath: 'assets/icons/quran.png',
