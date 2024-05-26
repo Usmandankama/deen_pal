@@ -60,15 +60,6 @@ class ChapterScreen extends StatelessWidget {
                   fontSize: 15,
                 ),
               ),
-              // trailing: Text(
-              //   '${chapterItem['arabic']}',
-              //   style: TextStyle(
-              //     fontWeight: FontWeight.bold,
-              //     color: colors.fontColorLight,
-              //     fontFamily: 'Poppins',
-              //     fontSize: 20,
-              //   ),
-              // ),
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(8),
               ),

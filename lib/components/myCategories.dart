@@ -4,7 +4,9 @@ import 'package:deen_pal/screens/quran_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:deen_pal/constants/colors.dart' as colors;
 
+import '../screens/calender_screen.dart';
 import '../screens/hadith_cateegory_screen.dart';
+import '../screens/mosuqe_locator_screen.dart';
 import '../screens/newSuranScreen.dart';
 
 class MyCategories extends StatelessWidget {
@@ -33,13 +35,13 @@ class MyCategories extends StatelessWidget {
         targetClass: QuranPageScreen(pageNumber: 3,),
         text: 'Quran'),
     Categories(
-        imagePath: 'assets/icons/quran.png',
-        targetClass: const QuranScreen(),
-        text: 'Quran'),
+        imagePath: 'assets/icons/mosque.png',
+        targetClass: const MosqueLocatorScreen(),
+        text: 'Mosque Locator'),
     Categories(
         imagePath: 'assets/icons/quran.png',
-        targetClass: const QuranScreen(),
-        text: 'Quran'),
+        targetClass: const IslamicCalendarScreen(),
+        text: 'Calender'),
     Categories(
         imagePath: 'assets/icons/quran.png',
         targetClass: const QuranScreen(),
