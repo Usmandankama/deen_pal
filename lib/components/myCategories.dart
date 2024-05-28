@@ -19,7 +19,7 @@ class MyCategories extends StatelessWidget {
       text: 'Quran',
     ),
     Categories(
-        imagePath: 'assets/icons/mosque.png',
+        imagePath: 'assets/icons/prayertimes.png',
         targetClass: const PrayerTimesScreen(),
         text: 'Prayer Times'),
     Categories(
@@ -27,19 +27,19 @@ class MyCategories extends StatelessWidget {
         targetClass: const QuranScreen(),
         text: 'Supplication'),
     Categories(
-        imagePath: 'assets/icons/praying.png',
+        imagePath: 'assets/icons/books.png',
         targetClass: const HadithCategoryScreen(),
         text: 'Hadtith'),
-    Categories(
-        imagePath: 'assets/icons/quran.png',
-        targetClass: QuranPageScreen(pageNumber: 3,),
-        text: 'Quran'),
+    // Categories(
+    //     imagePath: 'assets/icons/quran.png',
+    //     targetClass: QuranPageScreen(pageNumber: 3,),
+    //     text: 'Quran'),
     Categories(
         imagePath: 'assets/icons/mosque.png',
-        targetClass: const MosqueLocatorScreen(),
+        targetClass: const QuranScreen(),
         text: 'Mosque Locator'),
     Categories(
-        imagePath: 'assets/icons/quran.png',
+        imagePath: 'assets/icons/calender.png',
         targetClass: const IslamicCalendarScreen(),
         text: 'Calender'),
     Categories(

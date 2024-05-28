@@ -16,9 +16,12 @@ class _HadithCategoriesState extends State<HadithCategories> {
   final List<List<dynamic>> chapterData = [];
   final List<List<dynamic>> hadithData = [];
   final List<String> jsonPaths = [
+    'assets/data/muslim.json',
     'assets/data/malik.json',
     'assets/data/ahmed.json',
-    'assets/data/muslim.json',
+    'assets/data/bukhari.json',
+    'assets/data/ibnmajah.json',
+    'assets/data/tirmidhi.json',
   ];
 
   final List<HadithBooks> hadithBooks = [
@@ -30,19 +33,40 @@ class _HadithCategoriesState extends State<HadithCategories> {
       titleEnglish: "Sahih Muslim",
     ),
     HadithBooks(
-      authorArabic: "الإمام يحيى بن شرف النووي",
-      authorEnglish: "Imam Yahya ibn Sharaf al-Nawawi",
-      length: '42',
-      titleArabic: "الأربعون النووية",
-      titleEnglish: "The Forty Hadith",
+      authorArabic: "الإمام مالك بن أنس",
+      authorEnglish: "Imam Malik ibn Anas",
+      length: '1985',
+      titleArabic: "موطأ مالك",
+      titleEnglish: "Muwatta Malik",
     ),
     HadithBooks(
-      authorArabic: "الإمام يحيى بن شرف النووي",
-      authorEnglish: "Imam Yahya ibn Sharaf al-Nawawi",
-      length: '679',
-      titleArabic: "رياض الصالحين",
-      titleEnglish: "Riyad as-Salihin",
+      authorArabic: "الإمام أحمد بن حنبل",
+      titleArabic: "مسند الإمام أحمد بن حنبل",
+      authorEnglish: "Imam Ahmad ibn Hanbal",
+      length: '1374',
+      titleEnglish: "Musnad Ahmad ibn Hanbal",
     ),
+    HadithBooks(
+      titleArabic: "حيح البخاري",
+      authorArabic: "الإمام محمد بن إسماعيل البخاري",
+      authorEnglish: "Imam Muhammad ibn Ismail al-Bukhari",
+      length: '7277',
+      titleEnglish: "Sahih al-Bukhari",
+    ),
+    HadithBooks(
+      titleArabic: "سنن ابن ماجه",
+      authorArabic: "الإمام محمد بن يزيد بن ماجه القزويني",
+      authorEnglish: "Imam Muhammad ibn Yazid Ibn Majah al-Qazwini",
+      length: '4345',
+      titleEnglish: "Sunan ibn Majah",
+    ),
+    HadithBooks(
+      authorArabic: "الإمام أبو عيسى محمد بن عيسى الترمذي",
+      authorEnglish: "Imam Abu Isa Muhammad ibn Isa al-Tirmidhi",
+      length: '679',
+      titleArabic: "جامع الترمذي",
+      titleEnglish: "Jami' al-Tirmidhi",
+    )
   ];
 
   Future<void> _loadJsonData() async {
@@ -65,19 +89,19 @@ class _HadithCategoriesState extends State<HadithCategories> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: colors.accentColor,
-        appBar: AppBar(
-          backgroundColor: colors.accentColor,
-          centerTitle: true,
-          title: const Text(
-            'Hadith',
-            style: TextStyle(fontFamily: 'Poppins'),
-          ),
+      appBar: AppBar(
+        backgroundColor: colors.accentColor,
+        centerTitle: true,
+        title: const Text(
+          'Hadith',
+          style: TextStyle(fontFamily: 'Poppins'),
         ),
+      ),
       body: chapterData.isEmpty
-          ? Center(child: CircularProgressIndicator())
+          ? const Center(child: CircularProgressIndicator())
           : Padding(
-            padding: const EdgeInsets.all(10.0),
-            child: GridView.builder(
+              padding: const EdgeInsets.all(10.0),
+              child: GridView.builder(
                 itemCount: hadithBooks.length,
                 gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                   crossAxisCount: 2,
@@ -115,8 +139,8 @@ class _HadithCategoriesState extends State<HadithCategories> {
                       ),
                       child: Center(
                         child: Padding(
-                          padding:
-                              const EdgeInsets.only(left: 10, right: 10, top: 30),
+                          padding: const EdgeInsets.only(
+                              left: 10, right: 10, top: 30),
                           child: Column(
                             children: [
                               Text(
@@ -165,7 +189,7 @@ class _HadithCategoriesState extends State<HadithCategories> {
                   );
                 },
               ),
-          ),
+            ),
     );
   }
 }
