@@ -4,10 +4,7 @@ import 'package:deen_pal/screens/quran_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:deen_pal/constants/colors.dart' as colors;
 
-import '../screens/calender_screen.dart';
 import '../screens/hadith_cateegory_screen.dart';
-import '../screens/mosuqe_locator_screen.dart';
-import '../screens/newSuranScreen.dart';
 
 class MyCategories extends StatelessWidget {
   MyCategories({super.key});
@@ -19,7 +16,7 @@ class MyCategories extends StatelessWidget {
       text: 'Quran',
     ),
     Categories(
-        imagePath: 'assets/icons/prayertimes.png',
+        imagePath: 'assets/icons/prayertime.png',
         targetClass: const PrayerTimesScreen(),
         text: 'Prayer Times'),
     Categories(
@@ -27,21 +24,13 @@ class MyCategories extends StatelessWidget {
         targetClass: const QuranScreen(),
         text: 'Supplication'),
     Categories(
-        imagePath: 'assets/icons/books.png',
+        imagePath: 'assets/icons/book.png',
         targetClass: const HadithCategoryScreen(),
         text: 'Hadtith'),
-    // Categories(
-    //     imagePath: 'assets/icons/quran.png',
-    //     targetClass: QuranPageScreen(pageNumber: 3,),
-    //     text: 'Quran'),
     Categories(
         imagePath: 'assets/icons/mosque.png',
         targetClass: const QuranScreen(),
         text: 'Mosque Locator'),
-    Categories(
-        imagePath: 'assets/icons/calender.png',
-        targetClass: const IslamicCalendarScreen(),
-        text: 'Calender'),
     Categories(
         imagePath: 'assets/icons/quran.png',
         targetClass: const QuranScreen(),
@@ -50,14 +39,8 @@ class MyCategories extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GridView.builder(
-      physics: const NeverScrollableScrollPhysics(),
-      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-        crossAxisCount: 4,
-        childAspectRatio: 1,
-        mainAxisSpacing: 5,
-        crossAxisSpacing: 5,
-      ),
+    return ListView.builder(
+      scrollDirection: Axis.horizontal,
       itemCount: categories.length,
       itemBuilder: (context, index) {
         var category = categories[index];
@@ -72,18 +55,21 @@ class MyCategories extends StatelessWidget {
           },
           child: Column(
             children: [
-              Container(
-                height: 50,
-                width: 70,
-                decoration: BoxDecoration(
-                  color: colors.tileColor,
-                  borderRadius: BorderRadius.circular(10),
-                ),
-                child: Image.asset(
-                  category.imagePath,
-                  // height: 20,
-                  scale: 15,
-                  color: colors.secondaryColor,
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal:5.0),
+                child: Container(
+                  height: 70,
+                  width: 100,
+                  decoration: BoxDecoration(
+                    color: colors.tileColor,
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                  child: Image.asset(
+                    category.imagePath,
+                    // height: 20,
+                    scale: 15,
+                    color: colors.secondaryColor,
+                  ),
                 ),
               ),
               const SizedBox(height: 5),

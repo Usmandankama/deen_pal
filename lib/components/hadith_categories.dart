@@ -28,7 +28,7 @@ class _HadithCategoriesState extends State<HadithCategories> {
     HadithBooks(
       authorArabic: 'الإمام مسلم بن الحجاي',
       authorEnglish: 'Imam Muslim ibn al-Hajjaj al-Naysaburi',
-      length: '91',
+      length: '74596',
       titleArabic: "صحيح مسلم",
       titleEnglish: "Sahih Muslim",
     ),

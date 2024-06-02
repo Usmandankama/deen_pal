@@ -2,67 +2,34 @@ import 'package:flutter/material.dart';
 import 'package:deen_pal/components/prayer_tile.dart';
 import 'package:deen_pal/services/prayer_times.dart';
 import 'package:deen_pal/constants/colors.dart' as colors;
+import 'package:table_calendar/table_calendar.dart';
+
 
 class PrayerTimesScreen extends StatefulWidget {
   const PrayerTimesScreen({Key? key}) : super(key: key);
 
   @override
-  _PrayerTimesScreenState createState() => _PrayerTimesScreenState();
+  PrayerTimesScreenState createState() => PrayerTimesScreenState();
 }
 
-class _PrayerTimesScreenState extends State<PrayerTimesScreen> {
+class PrayerTimesScreenState extends State<PrayerTimesScreen> {
   final PrayerTimesService _prayerTimesService = PrayerTimesService();
   Future<Map<String, dynamic>>? _prayerTimes;
-  String _selectedLocation = 'Current Location'; // Default location
+  DateTime _focusedDay = DateTime.now();
+  DateTime? _selectedDay;
+
 
   @override
   void initState() {
     super.initState();
+    _selectedDay = _focusedDay;
     // Fetch the prayer times when the widget is initialized
     _prayerTimes = _prayerTimesService.fetchPrayerTimes();
   }
 
-  // Method to handle location selection
-  void _selectLocation() async {
-    // Simulate fetching user's location from a dialog or screen
-    String? location = await showDialog<String>(
-      context: context,
-      builder: (BuildContext context) {
-        // This could be a dialog or a screen for location selection
-        return AlertDialog(
-          title: Text('Select Location'),
-          content: Text('Please select your location'),
-          actions: <Widget>[
-            TextButton(
-              onPressed: () {
-                Navigator.of(context).pop('New York'); // Example location choice
-              },
-              child: Text('New York'),
-            ),
-            TextButton(
-              onPressed: () {
-                Navigator.of(context).pop('London'); // Example location choice
-              },
-              child: Text('London'),
-            ),
-            TextButton(
-              onPressed: () {
-                Navigator.of(context).pop('Paris'); // Example location choice
-              },
-              child: Text('Paris'),
-            ),
-          ],
-        );
-      },
-    );
 
-    // Update selected location if a location is chosen
-    if (location != null) {
-      setState(() {
-        _selectedLocation = location;
-      });
-    }
-  }
+
+  // Method to handle location selection
 
   @override
   Widget build(BuildContext context) {
@@ -73,14 +40,9 @@ class _PrayerTimesScreenState extends State<PrayerTimesScreen> {
         elevation: 0,
         backgroundColor: colors.accentColor,
         centerTitle: true,
-        title: Text('Prayer Times - $_selectedLocation'), // Show selected location in title
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.location_on),
-            onPressed: _selectLocation, // Handle location selection
-            tooltip: 'Select Location',
-          ),
-        ],
+        title: Text(
+          'Prayer Times',
+        ), // Show selected location in title
       ),
       body: FutureBuilder<Map<String, dynamic>>(
         future: _prayerTimes,
@@ -118,6 +80,57 @@ class _PrayerTimesScreenState extends State<PrayerTimesScreen> {
                         ),
                         height: constraints.maxHeight * 0.3,
                         width: double.infinity,
+                        child: Padding(
+                          padding: const EdgeInsets.all(10.0),
+                          child: TableCalendar(
+                            firstDay: DateTime.utc(2020, 1, 1),
+                            lastDay: DateTime.utc(2030, 12, 31),
+                            focusedDay: _focusedDay,
+                            calendarFormat: CalendarFormat.week,
+                            selectedDayPredicate: (day) {
+                              return isSameDay(_selectedDay, day);
+                            },
+                            onDaySelected: (selectedDay, focusedDay) {
+                              if (!isSameDay(_selectedDay, selectedDay)) {
+                                setState(() {
+                                  _selectedDay = selectedDay;
+                                  _focusedDay = focusedDay;
+                                });
+                              }
+                            },
+                            onPageChanged: (focusedDay) {
+                              _focusedDay = focusedDay;
+                            },
+                            calendarStyle: CalendarStyle(
+                              outsideDaysVisible: false,
+                              markersMaxCount: 3,
+                              todayDecoration: BoxDecoration(
+                                color: colors.secondaryColor,
+                                shape: BoxShape.circle,
+                              ),
+                              selectedDecoration: const BoxDecoration(
+                                color: Colors.orangeAccent,
+                                shape: BoxShape.circle,
+                              ),
+                              defaultTextStyle:
+                                  const TextStyle(color: Colors.white),
+                              weekendTextStyle:
+                                  const TextStyle(color: Colors.white70),
+                            ),
+                            headerStyle: HeaderStyle(
+                              formatButtonVisible: false,
+                              titleTextStyle: TextStyle(
+                                color: colors.primaryColor,
+                                fontSize: 20,
+                              ),
+                              leftChevronVisible: false,
+                              rightChevronVisible: false,
+                            ),
+                            availableCalendarFormats: const {
+                              CalendarFormat.week: 'Week',
+                            },
+                          ),
+                        ),
                       ),
                     ),
                     // Main content

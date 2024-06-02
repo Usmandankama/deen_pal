@@ -1,15 +1,28 @@
-// ignore_for_file: file_names
+import 'dart:convert';
+import 'package:http/http.dart' as http;
 
 class IslamicDate {
   final String hijriDate;
-  final String gregorianDate;
 
-  IslamicDate({required this.hijriDate, required this.gregorianDate});
+  IslamicDate({required this.hijriDate});
 
   factory IslamicDate.fromJson(Map<String, dynamic> json) {
     return IslamicDate(
-      hijriDate: json['hijri']['date'],
-      gregorianDate: json['gregorian']['date'],
+      hijriDate: json['data']['hijri']['date'],
     );
+  }
+
+  static Future<IslamicDate> fetchIslamicDate(DateTime date) async {
+    final response = await http.get(
+      Uri.parse(
+        'http://api.aladhan.com/v1/gToH?date=${date.toString().split(' ')[0]}',
+      ),
+    );
+
+    if (response.statusCode == 200) {
+      return IslamicDate.fromJson(json.decode(response.body));
+    } else {
+      throw Exception('Failed to load Islamic date');
+    }
   }
 }
