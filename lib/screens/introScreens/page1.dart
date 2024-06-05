@@ -15,7 +15,7 @@ class Page1 extends StatelessWidget {
       body: Column(
         children: [
           Container(
-            height: 350,
+            height: 600,
             width: deviceWidth,
             decoration: BoxDecoration(
             color: colors.accentColor,

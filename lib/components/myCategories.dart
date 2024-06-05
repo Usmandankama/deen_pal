@@ -56,7 +56,7 @@ class MyCategories extends StatelessWidget {
           child: Column(
             children: [
               Padding(
-                padding: const EdgeInsets.symmetric(horizontal:5.0),
+                padding: const EdgeInsets.symmetric(horizontal:10.0),
                 child: Container(
                   height: 70,
                   width: 100,
