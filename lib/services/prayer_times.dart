@@ -47,7 +47,6 @@ class PrayerTimesService {
       Placemark place = placemarks[0];
       _userLocation = place.locality;
     }
-    print('User Location: $_userLocation');
   }
 
   Future<Map<String, dynamic>> fetchPrayerTimes() async {

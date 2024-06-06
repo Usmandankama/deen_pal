@@ -1,5 +1,5 @@
 import '../models/categories.dart';
-import 'package:deen_pal/screens/prayer_times.dart';
+import 'package:deen_pal/screens/prayer_times_screen.dart';
 import 'package:deen_pal/screens/quran_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:deen_pal/constants/colors.dart' as colors;
