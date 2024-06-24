@@ -16,11 +16,11 @@ class ChapterScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: colors.accentColor,
+      backgroundColor: colors.primaryColor,
       appBar: AppBar(
         title: const Text('Chapters'),
         centerTitle: true,
-        backgroundColor: colors.accentColor,
+        backgroundColor: colors.primaryColor,
       ),
       body: ListView.builder(
         itemCount: chapters.length,

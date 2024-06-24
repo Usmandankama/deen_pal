@@ -88,9 +88,9 @@ class _HadithCategoriesState extends State<HadithCategories> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: colors.accentColor,
+      backgroundColor: colors.primaryColor,
       appBar: AppBar(
-        backgroundColor: colors.accentColor,
+        backgroundColor: colors.primaryColor,
         centerTitle: true,
         title: const Text(
           'Hadith',

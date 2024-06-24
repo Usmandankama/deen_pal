@@ -16,7 +16,7 @@ class _HadithScreenState extends State<HadithScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: colors.accentColor,
+      backgroundColor: colors.primaryColor,
       appBar: AppBar(
         title: Text(
           widget.chapterName,
@@ -25,7 +25,7 @@ class _HadithScreenState extends State<HadithScreen> {
           ),
         ),
         centerTitle: true,
-        backgroundColor: colors.accentColor,
+        backgroundColor: colors.primaryColor,
       ),
       body: Container(
         decoration: BoxDecoration(

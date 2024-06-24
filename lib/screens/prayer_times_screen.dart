@@ -38,7 +38,7 @@ class PrayerTimesScreenState extends State<PrayerTimesScreen> {
       appBar: AppBar(
         foregroundColor: colors.fontColorLight,
         elevation: 0,
-        backgroundColor: colors.accentColor,
+        backgroundColor: colors.primaryColor,
         centerTitle: true,
         title: Text(
           'Prayer Times',
@@ -76,7 +76,7 @@ class PrayerTimesScreenState extends State<PrayerTimesScreen> {
                       alignment: Alignment.topCenter,
                       child: Container(
                         decoration: BoxDecoration(
-                          color: colors.accentColor,
+                          color: colors.primaryColor,
                         ),
                         height: constraints.maxHeight * 0.3,
                         width: double.infinity,

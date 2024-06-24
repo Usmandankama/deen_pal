@@ -38,18 +38,18 @@ class _SurahContentState extends State<SurahContent> {
   Widget build(BuildContext context) {
     double screenheight = MediaQuery.of(context).size.height;
     return Scaffold(
-      backgroundColor:
-          // isLightMode
-              // const Color.fromRGBO(255, 255, 255, 1)
-          colors.accentColor,
+      backgroundColor: isLightMode ? colors.primaryColor : colors.pageColor,
       appBar: AppBar(
-        backgroundColor: colors.accentColor,
+        foregroundColor:  isLightMode ? colors.fontColorLight : colors.fontColorDark,
+        backgroundColor: isLightMode ? colors.primaryColor : colors.pageColor,
         title: Row(
           mainAxisAlignment: MainAxisAlignment.end,
           children: [
             Text(
               widget.surah.surahNameArabic,
-              style: const TextStyle(),
+              style: const TextStyle(
+                fontSize: 25
+              ),
             ),
             const SizedBox(width: 20),
             IconButton(
@@ -72,22 +72,22 @@ class _SurahContentState extends State<SurahContent> {
         ),
       ),
       body: ListView.builder(
-        padding: const EdgeInsets.symmetric(horizontal: 7),
+        padding: const EdgeInsets.symmetric(horizontal: 7,vertical: 10),
         itemCount: ayahts.length,
         itemBuilder: (context, index) {
           int itemsIndex = index + 1;
           return Column(
             children: [
               ListTile(
-                contentPadding: const EdgeInsets.all(5),
+                tileColor: isLightMode ? colors.tileColor : colors.lightTileColor,
+                contentPadding: const EdgeInsets.symmetric(vertical:5,horizontal: 10),
                 shape: const ContinuousRectangleBorder(
                   borderRadius: BorderRadius.all(
                     Radius.circular(20),
                   ),
                 ),
-                // tileColor: colors.tileColor,
-                // textColor: isLightMode ? Colors.black : colors,
-                textColor: colors.fontColorLight,
+                textColor:
+                    isLightMode ? colors.fontColorLight : colors.fontColorDark,
                 trailing: Text(
                   "$itemsIndex",
                   style: TextStyle(fontSize: screenheight > 600 ? 25 : 20),
@@ -104,10 +104,13 @@ class _SurahContentState extends State<SurahContent> {
                 //   ),
                 // ),
               ),
-              const Divider(
-                color: Color.fromARGB(117, 190, 190, 190),
-                thickness: 1.2,
-              )
+              const SizedBox(height: 10)
+              // Divider(
+              //   color: isLightMode
+              //       ? const Color.fromARGB(117, 190, 190, 190)
+              //       : const Color.fromARGB(82, 0, 0, 0),
+              //   thickness: 1.2,
+              // )
             ],
           );
         },

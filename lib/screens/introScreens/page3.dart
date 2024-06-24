@@ -9,14 +9,14 @@ class Page3 extends StatelessWidget {
     final deviceWidth = MediaQuery.of(context).size.width;
     // final deviceHeight = MediaQuery.of(context).size.height;
   return Scaffold(
-      backgroundColor: colors.accentColor,
+      backgroundColor: colors.primaryColor,
       body: Column(
         children: [
           Container(
             height: 600,
             width: deviceWidth,
             decoration: BoxDecoration(
-            color: colors.accentColor,
+            color: colors.primaryColor,
               image: const DecorationImage(
                   image: AssetImage(
                     'assets/images/zakat.jpg',

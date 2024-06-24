@@ -22,7 +22,7 @@ class HadithPageview extends StatelessWidget {
           narrator: narrator,
         );
         return Scaffold(
-          backgroundColor: colors.accentColor,
+          backgroundColor: colors.primaryColor,
           body: SingleChildScrollView(
             child: Padding(
               padding: const EdgeInsets.all(20),

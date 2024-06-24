@@ -9,6 +9,7 @@ import '../screens/hadith_cateegory_screen.dart';
 class MyCategories extends StatelessWidget {
   MyCategories({super.key});
 
+
   final List<Categories> categories = [
     Categories(
       imagePath: 'assets/icons/quran.png',
@@ -41,6 +42,7 @@ class MyCategories extends StatelessWidget {
   Widget build(BuildContext context) {
     return ListView.builder(
       scrollDirection: Axis.horizontal,
+      physics: const NeverScrollableScrollPhysics(),
       itemCount: categories.length,
       itemBuilder: (context, index) {
         var category = categories[index];

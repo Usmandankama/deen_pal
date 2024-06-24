@@ -42,7 +42,7 @@ class _StartupScreenState extends State<StartupScreen> {
               alignment: Alignment.bottomLeft,
               child: SmoothPageIndicator(
                   effect: ExpandingDotsEffect(
-                    dotColor: colors.primaryColor,
+                    dotColor: colors.fontColorLight,
                     activeDotColor: colors.secondaryColor,
                     spacing: 8,
                   ),

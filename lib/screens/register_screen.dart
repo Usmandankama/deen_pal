@@ -18,9 +18,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomInset: false,
-      backgroundColor: colors.accentColor,
+      backgroundColor: colors.primaryColor,
       appBar: AppBar(
-        backgroundColor: colors.accentColor,
+        backgroundColor: colors.primaryColor,
         elevation: 0,
         foregroundColor: colors.fontColorLight,
       ),

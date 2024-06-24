@@ -18,9 +18,9 @@ class _LoginScreenState extends State<LoginScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomInset: false,
-      backgroundColor: colors.accentColor,
+      backgroundColor: colors.primaryColor,
       appBar: AppBar(
-        backgroundColor: colors.accentColor,
+        backgroundColor: colors.primaryColor,
         foregroundColor: colors.fontColorLight,
         elevation: 0,
       ),

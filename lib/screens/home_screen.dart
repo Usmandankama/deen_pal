@@ -1,5 +1,6 @@
 import 'package:deen_pal/components/myCategories.dart';
 import 'package:deen_pal/components/nextPrayer.dart';
+import 'package:deen_pal/screens/all_features_screeen.dart';
 import 'package:flutter/material.dart';
 import 'package:deen_pal/constants/colors.dart' as colors;
 
@@ -19,7 +20,7 @@ class _HomeScreenState extends State<HomeScreen> {
     return Scaffold(
       appBar: AppBar(
         toolbarHeight: 80,
-        backgroundColor: colors.accentColor,
+        backgroundColor: colors.primaryColor,
         title: Row(
           children: [
             const CircleAvatar(),
@@ -51,7 +52,7 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
         ],
       ),
-      backgroundColor: colors.accentColor,
+      backgroundColor: colors.primaryColor,
       body: SingleChildScrollView(
         child: Padding(
           padding: EdgeInsets.all(padding),
@@ -59,16 +60,41 @@ class _HomeScreenState extends State<HomeScreen> {
             children: [
               const NextPrayer(),
               const SizedBox(height: 20),
-              Align(
-                alignment: Alignment.centerLeft,
-                child: Text(
-                  'Categories',
-                  style: TextStyle(
-                    fontFamily: 'Poppins',
-                    fontSize: 20,
-                    color: colors.fontColorLight,
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Align(
+                    alignment: Alignment.centerLeft,
+                    child: Text(
+                      'Features',
+                      style: TextStyle(
+                        fontFamily: 'Poppins',
+                        fontSize: 20,
+                        color: colors.fontColorLight,
+                      ),
+                    ),
                   ),
-                ),
+                  Align(
+                    alignment: Alignment.centerRight,
+                    child: TextButton(
+                      onPressed: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => const AllFeatures(),
+                            ));
+                      },
+                      child: Text(
+                        'View all',
+                        style: TextStyle(
+                          fontFamily: 'Poppins',
+                          fontSize: 17,
+                          color: colors.secondaryColor,
+                        ),
+                      ),
+                    ),
+                  )
+                ],
               ),
               const SizedBox(height: 10),
               SizedBox(

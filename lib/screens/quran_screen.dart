@@ -16,11 +16,14 @@ class _QuranScreenState extends State<QuranScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Al-Quran'),
-        backgroundColor: colors.accentColor,
+        title: Text(
+          'Al-Quran',
+          style: TextStyle(fontFamily: 'Poppins', color: colors.fontColorLight),
+        ),
+        backgroundColor: colors.primaryColor,
         centerTitle: true,
       ),
-      backgroundColor: colors.accentColor,
+      backgroundColor: colors.primaryColor,
       body: const SurahList(),
     );
   }
