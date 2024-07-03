@@ -27,7 +27,7 @@ class _NextPrayerState extends State<NextPrayer> {
       final prayerTimes = await _prayerTimesService.fetchPrayerTimes();
       setState(() {
         _prayerTimes = prayerTimes;
-        _updateNextPrayer();  // Move the _updateNextPrayer call inside setState
+        _updateNextPrayer();
       });
     } catch (e) {
       setState(() {
@@ -91,9 +91,8 @@ class _NextPrayerState extends State<NextPrayer> {
   Widget build(BuildContext context) {
     return Container(
       padding: const EdgeInsets.all(20),
-      decoration: BoxDecoration(
-        color: colors.tileColor,
-        borderRadius: BorderRadius.circular(20),
+      decoration: const BoxDecoration(
+        color: Color.fromARGB(229, 255, 255, 255),
       ),
       height: 220,
       width: double.infinity,
@@ -104,17 +103,17 @@ class _NextPrayerState extends State<NextPrayer> {
           Text(
             'Next Prayer',
             style: TextStyle(
-              color: colors.secondaryColor,
+              color: colors.fontColorDark,
               fontSize: 25,
               fontFamily: 'Poppins',
             ),
           ),
           Text(
-            _prayerTimes != null
+            _prayerTimes != null 
                 ? '$_nextPrayer: ${_prayerTimes!['items'][0][_nextPrayer.toLowerCase()] ?? ''}'
                 : 'Loading...',
             style: TextStyle(
-              color: colors.fontColorLight,
+              color: colors.fontColorDark,
               fontSize: 30,
               fontWeight: FontWeight.bold,
               fontFamily: 'Poppins',
@@ -124,7 +123,7 @@ class _NextPrayerState extends State<NextPrayer> {
           Text(
             _timeLeft,
             style: TextStyle(
-              color: colors.fontColorLight,
+              color: colors.fontColorDark,
               fontSize: 20,
               fontFamily: 'Poppins',
             ),

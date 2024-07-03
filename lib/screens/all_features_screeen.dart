@@ -19,26 +19,32 @@ class _AllFeaturesState extends State<AllFeatures> {
       imagePath: 'assets/icons/quran.png',
       targetClass: const QuranScreen(),
       text: 'Quran',
+      subText: '',
     ),
     Categories(
         imagePath: 'assets/icons/prayertime.png',
         targetClass: const PrayerTimesScreen(),
+        subText: '',
         text: 'Prayer Times'),
     Categories(
         imagePath: 'assets/icons/dua-hands.png',
         targetClass: const QuranScreen(),
+        subText: '',
         text: 'Supplication'),
     Categories(
         imagePath: 'assets/icons/book.png',
         targetClass: const HadithCategoryScreen(),
+        subText: '',
         text: 'Hadtith'),
     Categories(
         imagePath: 'assets/icons/mosque.png',
         targetClass: const QuranScreen(),
+        subText: '',
         text: 'Mosque Locator'),
     Categories(
         imagePath: 'assets/icons/quran.png',
         targetClass: const QuranScreen(),
+        subText: '',
         text: 'Quran'),
   ];
   @override
@@ -98,7 +104,7 @@ class _AllFeaturesState extends State<AllFeatures> {
                           padding: const EdgeInsets.symmetric(vertical: 8.0),
                           child: Image.asset(
                             category.imagePath,
-                            scale: 7,
+                            scale: 10,
                             color: colors.secondaryColor,
                           ),
                         ),

@@ -13,6 +13,9 @@ class SurahList extends StatefulWidget {
 }
 
 class _SurahListState extends State<SurahList> {
+  final searchController = TextEditingController();
+  List<Surah> surahs = [];
+
   // Method to load Surah data from JSON files asynchronously
   Future<List<Surah>> _loadSurahData() async {
     try {
@@ -27,22 +30,18 @@ class _SurahListState extends State<SurahList> {
       final dataTranslated = json.decode(responseTranslated);
 
       // Create a list to hold Surah objects
-      List<Surah> surahs = [];
-
       // Populate the list with Surah objects, combining data from both JSON files
       for (int i = 0; i < data['surahs'].length; i++) {
         final surah = data['surahs'][i];
         final surahTranslated = dataTranslated['surahs'][i];
         surahs.add(Surah(
-          surahNameEng: surah['englishNameTranslation'],
+          surahNameEng: surah['englishName'],
           surahNameArabic: surah['name'],
           cityRevealed: surah['revelationType'],
           ayahts: surah['ayahs'],
           ayahtsTranslated: surahTranslated['ayahs'],
         ));
       }
-
-      // Return the list of Surah objects
       return surahs;
     } catch (e) {
       // Throw an exception if there is an error loading JSON data
@@ -67,68 +66,119 @@ class _SurahListState extends State<SurahList> {
         // Display the list of Surahs once the data is successfully loaded
         else {
           final surahs = snapshot.data!;
-          return ListView(
+          return Column(
             children: [
               Container(
-                height: 300,
-                decoration: const BoxDecoration(
-                    // color: Colors.white
-                    image: DecorationImage(
-                  image: AssetImage('assets/images/bg2.jpg'),
-                  fit: BoxFit.cover,
-                )),
-                child: const Column(children: []),
-              ),
-              ListView.builder(
-                shrinkWrap: true,
-                physics: NeverScrollableScrollPhysics(),
-                padding: const EdgeInsets.symmetric(vertical: 10),
-                itemCount: surahs.length,
-                itemBuilder: (context, index) {
-                  final surah = surahs[index];
-                  return Padding(
-                    padding:
-                        const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-                    child: ListTile(
-                      // Set the tile color
-                      tileColor: colors.tileColor,
-                      // Navigate to the Surah details page when a tile is tapped
-                      onTap: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => SurahContent(surah: surah),
-                          ),
-                        );
-                      },
-                      // Display the Surah index
-                      leading: Text(
-                        '${index + 1}',
-                        style: TextStyle(
-                          fontSize: 20,
-                          fontFamily: 'Poppins',
-                          color: colors.fontColorLight,
-                        ),
-                      ),
-                      // Display the Surah name in Arabic
-                      trailing: Text(
-                        surah.surahNameArabic,
-                        style: TextStyle(
-                          fontSize: 25,
-                          color: colors.fontColorLight,
-                        ),
-                      ),
-                      shape: RoundedRectangleBorder(
+                height: 100,
+                color: const Color.fromARGB(246, 255, 255, 255),
+                child: Padding(
+                  padding: const EdgeInsets.all(10.0),
+                  child: Center(
+                    child: Container(
+                      height: 60,
+                      decoration: BoxDecoration(
+                        color: colors.tileColor,
                         borderRadius: BorderRadius.circular(8),
                       ),
+                      child: TextField(
+                        onChanged: searchSurahs,
+                        controller: searchController,
+                        cursorColor: colors.fontColorLight,
+                        autocorrect: false,
+                        style: TextStyle(
+                            color: colors.fontColorLight,
+                            fontSize: 18,
+                            fontFamily: 'Poppins'),
+                        decoration: InputDecoration(
+                          fillColor: colors.fontColorLight,
+                          contentPadding: const EdgeInsets.symmetric(
+                              horizontal: 20, vertical: 15),
+                          suffixIcon: Icon(
+                            Icons.search_rounded,
+                            size: 30,
+                            color: colors.fontColorLight,
+                          ),
+                          border: InputBorder.none,
+                          hintText: 'Search',
+                          hintStyle: TextStyle(
+                              color: colors.fontColorLight,
+                              fontFamily: 'Poppins'),
+                        ),
+                      ),
                     ),
-                  );
-                },
+                  ),
+                ),
+              ),
+              Expanded(
+                child: ListView.builder( 
+                  shrinkWrap: true,
+                  // physics: const NeverScrollableScrollPhysics(),
+                  padding: const EdgeInsets.symmetric(vertical: 10),
+                  itemCount: surahs.length,
+                  itemBuilder: (context, index) {
+                    final surah = surahs[index];
+                    return Padding(
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 10, vertical: 5),
+                      child: ListTile(
+                        // Set the tile color
+                        tileColor: colors.tileColor,
+                        // Navigate to the Surah details page when a tile is tapped
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => SurahContent(surah: surah),
+                            ),
+                          );
+                        },
+                        // Display the Surah index
+                        leading: Text(
+                          '${index + 1}',
+                          style: TextStyle(
+                            fontSize: 20,
+                            fontFamily: 'Poppins',
+                            color: colors.fontColorLight,
+                          ),
+                        ),
+                        title: Text(
+                          surah.surahNameEng,
+                          style: TextStyle(
+                            fontSize: 20,
+                            color: colors.fontColorLight,
+                          ),
+                        ),
+                        // Display the Surah name in Arabic
+                        trailing: Text(
+                          surah.surahNameArabic,
+                          style: TextStyle(
+                            fontSize: 25,
+                            color: colors.fontColorLight,
+                          ),
+                        ),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(8),
+                        ),
+                      ),
+                    );
+                  },
+                ),
               ),
             ],
           );
         }
       },
     );
+  }
+
+  void searchSurahs(String query) {
+    final results = surahs.where((surah) {
+      final surahTitle = surah.surahNameEng.toLowerCase();
+      final input = query.toLowerCase();
+
+      return surahTitle.contains(input);
+    }).toList();
+
+    setState(() => surahs = results);
   }
 }

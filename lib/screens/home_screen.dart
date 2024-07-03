@@ -16,15 +16,15 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    double padding = 10.0;
     return Scaffold(
       appBar: AppBar(
         toolbarHeight: 80,
         backgroundColor: colors.primaryColor,
-        title: Row(
+        foregroundColor: colors.fontColorLight,
+        title: const Row(
           children: [
-            const CircleAvatar(),
-            const SizedBox(width: 10),
+            CircleAvatar(),
+            SizedBox(width: 10),
             Column(
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -32,12 +32,11 @@ class _HomeScreenState extends State<HomeScreen> {
                 Text(
                   'Assalamualikum',
                   style: TextStyle(
-                      color: colors.fontColorLight,
                       fontSize: 15,
                       fontWeight: FontWeight.w200,
                       fontFamily: 'Poppins'),
                 ),
-                const Text(
+                Text(
                   'Usman Abubakar',
                   style: TextStyle(fontFamily: 'Poppins'),
                 ),
@@ -52,58 +51,17 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
         ],
       ),
-      backgroundColor: colors.primaryColor,
-      body: SingleChildScrollView(
-        child: Padding(
-          padding: EdgeInsets.all(padding),
-          child: Column(
-            children: [
-              const NextPrayer(),
-              const SizedBox(height: 20),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Align(
-                    alignment: Alignment.centerLeft,
-                    child: Text(
-                      'Features',
-                      style: TextStyle(
-                        fontFamily: 'Poppins',
-                        fontSize: 20,
-                        color: colors.fontColorLight,
-                      ),
-                    ),
-                  ),
-                  Align(
-                    alignment: Alignment.centerRight,
-                    child: TextButton(
-                      onPressed: () {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => const AllFeatures(),
-                            ));
-                      },
-                      child: Text(
-                        'View all',
-                        style: TextStyle(
-                          fontFamily: 'Poppins',
-                          fontSize: 17,
-                          color: colors.secondaryColor,
-                        ),
-                      ),
-                    ),
-                  )
-                ],
-              ),
-              const SizedBox(height: 10),
-              SizedBox(
-                height: 100,
-                child: MyCategories(),
-              ),
-            ],
+      backgroundColor:colors.primaryColor,
+      body: ListView(
+        // padding: const EdgeInsets.symmetric(horizontal: 10,vertical: 10),
+        children: [
+          const NextPrayer(),
+          const SizedBox(height: 20),
+          Padding(
+            padding: const EdgeInsets.all(10.0),
+            child: MyCategories(),
           ),
-        ),
+        ],
       ),
     );
   }

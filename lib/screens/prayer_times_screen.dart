@@ -56,7 +56,7 @@ class PrayerTimesScreenState extends State<PrayerTimesScreen> {
               child: Text(
                 'Network error',
                 style: TextStyle(
-                  color: colors.fontColorDark,
+                  color: colors.fontColorLight,
                   fontSize: 25,
                   fontFamily: 'Poppins',
                 ),

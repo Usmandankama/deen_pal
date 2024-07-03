@@ -21,7 +21,7 @@ class PrayerTile extends StatelessWidget {
           title: Text(
             text,
             style: TextStyle(
-              color: colors.fontColorDark,
+              color: colors.fontColorLight,
               fontSize: 18,
               fontWeight: FontWeight.bold,
             ),
@@ -34,7 +34,7 @@ class PrayerTile extends StatelessWidget {
           trailing: Text(
             pryarTime,
             style: TextStyle(
-              color: colors.fontColorDark,
+              color: colors.fontColorLight,
               fontFamily: 'Poppins',
               fontSize: 20,
             ),
